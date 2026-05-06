@@ -420,6 +420,7 @@ function getCardState() {
     photoData: photoData,
     splitPhotoData: splitPhotoData,
     logoData: logoData,
+    cardSize: document.getElementById('card-size')?.value || '1080,1350',
   };
 }
 
@@ -483,6 +484,16 @@ function applyCardState(state) {
   if (aBtn) aBtn.classList.add('active');
   buildDynInputs();
   restoreDynFromMemory(curLayout);
+  // 카드 크기 복원
+  if (state.cardSize) {
+    const csEl = document.getElementById('card-size');
+    if (csEl && csEl.value !== state.cardSize) { csEl.value = state.cardSize; applyCardSize(); }
+  }
+  // 항목 수 기반 레이아웃: 복원된 count로 DOM 재빌드 후 값 재복원
+  if (curLayout === 'list') { buildListItems(); restoreDynFromMemory(curLayout); }
+  else if (curLayout === 'checklist') { buildClItems(); restoreDynFromMemory(curLayout); }
+  else if (curLayout === 'timeline') { buildTlItems(); restoreDynFromMemory(curLayout); }
+  else if (curLayout === 'multistat') { buildMsItems(); restoreDynFromMemory(curLayout); }
   renderCard();
 }
 
@@ -545,7 +556,9 @@ function duplicateCard(idx) {
 
 function deleteCard(idx) {
   if (cards.length === 1) return;
+  cards[curCardIdx] = getCardState();
   cards.splice(idx, 1);
+  if (idx < curCardIdx) curCardIdx--;
   curCardIdx = Math.min(curCardIdx, cards.length - 1);
   applyCardState(cards[curCardIdx]);
   updateSlideStrip();
@@ -593,8 +606,8 @@ window.addEventListener('resize', updatePreviewScale);
 // ── 텍스트 마크업 (*강조*, =하이라이트=)
 function processText(raw) {
   return raw
-    .replace(/\*(.*?)\*/g, '<span style="color:var(--point);font-weight:900;">$1</span>')
     .replace(/=(.*?)=/g, '<span style="background:var(--point);color:#111;padding:0 4px;border-radius:3px;font-weight:700;">$1</span>')
+    .replace(/\*(.*?)\*/g, '<span style="color:var(--point);font-weight:900;">$1</span>')
     .replace(/\n/g, '<br>');
 }
 
@@ -612,6 +625,7 @@ function applyCardSize() {
   card.style.padding = py + 'px ' + px + 'px';
   updatePreviewScale();
   renderCard();
+  saveState();
 }
 
 function setBgFit(fit, btn) {
@@ -619,12 +633,14 @@ function setBgFit(fit, btn) {
   document.querySelectorAll('#bg-fit-btns .align-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCard();
+  saveState();
 }
 function setSplitFit(fit, btn) {
   splitFit = fit;
   document.querySelectorAll('#split-fit-btns .align-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCard();
+  saveState();
 }
 
 function loadSplitPhoto(input) {
@@ -665,6 +681,7 @@ function setLogoPos(pos, btn) {
   document.querySelectorAll('#logo-pos-btns .align-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCard();
+  saveState();
 }
 
 function applyLogo() {
@@ -734,6 +751,11 @@ function setLayout(type, btn) {
   document.getElementById('ctrl-cover-pos').style.display = type === 'cover' ? 'flex' : 'none';
   buildDynInputs();
   restoreDynFromMemory(type); // 돌아온 레이아웃 내용 복원
+  // 항목 수 기반 레이아웃: 복원된 count로 DOM 재빌드 후 값 재복원
+  if (type === 'list') { buildListItems(); restoreDynFromMemory(type); }
+  else if (type === 'checklist') { buildClItems(); restoreDynFromMemory(type); }
+  else if (type === 'timeline') { buildTlItems(); restoreDynFromMemory(type); }
+  else if (type === 'multistat') { buildMsItems(); restoreDynFromMemory(type); }
   renderCard();
 }
 
@@ -742,6 +764,7 @@ function setAlign(a, btn) {
   document.querySelectorAll('#align-btns .align-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderCard();
+  saveState();
 }
 
 function buildDynInputs() {
@@ -864,6 +887,8 @@ function buildDynInputs() {
 function buildListItems() {
   const count = parseInt(document.getElementById('list-count').value);
   document.getElementById('lc-val').textContent = count + '개';
+  const prev = {};
+  for (let i = 0; i < 4; i++) { const el = document.getElementById('li-'+i); if (el) prev[i] = el.value; }
   const defaults = [
     '공공영역 | 노동이사 교육사업·사진공모전으로 공공기관 현장을 지원합니다.',
     '상생영역 | 파트너 지원·상생대학으로 노동·시민사회와 함께합니다.',
@@ -872,7 +897,8 @@ function buildListItems() {
   ];
   let html = '';
   for (let i = 0; i < count; i++) {
-    html += `<div class="list-item-row"><span class="item-num">0${i+1}</span><input type="text" id="li-${i}" value="${defaults[i]||'항목 제목 | 항목 설명'}" oninput="renderCard()"></div>`;
+    const v = (prev[i] !== undefined) ? prev[i] : (defaults[i]||'항목 제목 | 항목 설명');
+    html += '<div class="list-item-row"><span class="item-num">0'+(i+1)+'</span><input type="text" id="li-'+i+'" value="'+v.replace(/"/g,'&quot;')+'" oninput="renderCard()"></div>';
   }
   document.getElementById('list-items').innerHTML = html;
 }
@@ -880,13 +906,20 @@ function buildListItems() {
 function buildClItems() {
   const count = parseInt(document.getElementById('cl-count').value);
   document.getElementById('clc-val').textContent = count + '개';
+  const prevTxt = {}, prevChk = {};
+  for (let i = 0; i < 5; i++) {
+    const tel = document.getElementById('cl-'+i); if (tel) prevTxt[i] = tel.value;
+    const cel = document.getElementById('cl-chk-'+i); if (cel) prevChk[i] = cel.checked;
+  }
   const defaults = ['사업계획서 초안 작성하기','주요 활동 예산 검토하기','담당자 연락처 및 서류 확인','지원서 최종 검토 및 제출','선정 후 협약 일정 확인하기'];
   let html = '';
   for (let i = 0; i < count; i++) {
-    html += `<div style="display:flex;gap:6px;align-items:center;padding:4px 0;">
-      <input type="checkbox" id="cl-chk-${i}" onchange="renderCard()" style="width:16px;height:16px;accent-color:var(--point);cursor:pointer;flex-shrink:0;">
-      <input type="text" id="cl-${i}" value="${defaults[i]||'항목 내용'}" oninput="renderCard()" style="flex:1;">
-    </div>`;
+    const v = (prevTxt[i] !== undefined) ? prevTxt[i] : (defaults[i]||'항목 내용');
+    const chk = prevChk[i] ? ' checked' : '';
+    html += '<div style="display:flex;gap:6px;align-items:center;padding:4px 0;">'
+          + '<input type="checkbox" id="cl-chk-'+i+'" onchange="renderCard()" style="width:16px;height:16px;accent-color:var(--point);cursor:pointer;flex-shrink:0;"'+chk+'>'
+          + '<input type="text" id="cl-'+i+'" value="'+v.replace(/"/g,'&quot;')+'" oninput="renderCard()" style="flex:1;">'
+          + '</div>';
   }
   document.getElementById('cl-items').innerHTML = html;
 }
@@ -894,6 +927,8 @@ function buildClItems() {
 function buildTlItems() {
   const count = parseInt(document.getElementById('tl-count').value);
   document.getElementById('tlc-val').textContent = count + '개';
+  const prev = {};
+  ['y','t','d'].forEach(k => { for (let i = 0; i < 5; i++) { const el = document.getElementById('tl-'+k+'-'+i); if (el) prev[k+i] = el.value; } });
   const defaults = [
     {y:'2019',t:'공공상생연대기금 출범',d:'공공·상생·연대의 가치를 담아 설립'},
     {y:'2021',t:'상생대학 사업 시작',d:'대학동아리 지원으로 미래 세대와 연대'},
@@ -904,11 +939,14 @@ function buildTlItems() {
   let html = '';
   for (let i = 0; i < count; i++) {
     const d = defaults[i] || {y:'----',t:'항목 제목',d:'설명'};
-    html += `<div style="display:flex;flex-direction:column;gap:3px;padding:6px 0;border-bottom:1px solid #222;">
-      <input type="text" id="tl-y-${i}" value="${d.y}" placeholder="연도/시기" oninput="renderCard()" style="font-size:11px;">
-      <input type="text" id="tl-t-${i}" value="${d.t}" placeholder="제목" oninput="renderCard()">
-      <input type="text" id="tl-d-${i}" value="${d.d}" placeholder="설명 (선택)" oninput="renderCard()" style="font-size:11px;">
-    </div>`;
+    const vy = (prev['y'+i] !== undefined) ? prev['y'+i] : d.y;
+    const vt = (prev['t'+i] !== undefined) ? prev['t'+i] : d.t;
+    const vd = (prev['d'+i] !== undefined) ? prev['d'+i] : d.d;
+    html += '<div style="display:flex;flex-direction:column;gap:3px;padding:6px 0;border-bottom:1px solid #222;">'
+          + '<input type="text" id="tl-y-'+i+'" value="'+vy.replace(/"/g,'&quot;')+'" placeholder="연도/시기" oninput="renderCard()" style="font-size:11px;">'
+          + '<input type="text" id="tl-t-'+i+'" value="'+vt.replace(/"/g,'&quot;')+'" placeholder="제목" oninput="renderCard()">'
+          + '<input type="text" id="tl-d-'+i+'" value="'+vd.replace(/"/g,'&quot;')+'" placeholder="설명 (선택)" oninput="renderCard()" style="font-size:11px;">'
+          + '</div>';
   }
   document.getElementById('tl-items').innerHTML = html;
 }
@@ -916,6 +954,14 @@ function buildTlItems() {
 function buildMsItems() {
   const count = parseInt(document.getElementById('ms-count').value);
   document.getElementById('ms-count-val').textContent = count + '개';
+  // 기존 입력값 보존
+  const prev = {};
+  ['n','u','l','d'].forEach(k => {
+    for (let i = 0; i < 4; i++) {
+      const el = document.getElementById('ms-'+k+'-'+i);
+      if (el) prev[k+i] = el.value;
+    }
+  });
   const defaults = [
     {n:'62',u:'개',l:'참여 동아리',d:'3개년 누적 지원 동아리 수'},
     {n:'3',u:'년',l:'지원 기간',d:'2021 · 2023 · 2024년 운영'},
@@ -925,13 +971,17 @@ function buildMsItems() {
   let html = '';
   for (let i = 0; i < count; i++) {
     const d = defaults[i] || {n:'0',u:'',l:'레이블',d:'설명'};
+    const vn = (prev['n'+i] !== undefined) ? prev['n'+i] : d.n;
+    const vu = (prev['u'+i] !== undefined) ? prev['u'+i] : d.u;
+    const vl = (prev['l'+i] !== undefined) ? prev['l'+i] : d.l;
+    const vd = (prev['d'+i] !== undefined) ? prev['d'+i] : d.d;
     html += '<div style="display:flex;flex-direction:column;gap:3px;padding:5px 0;border-bottom:1px solid #222;">'
           + '<div style="display:flex;gap:5px;">'
-          + '<input type="text" id="ms-n-'+i+'" value="'+d.n+'" placeholder="숫자" oninput="renderCard()" style="width:72px;">'
-          + '<input type="text" id="ms-u-'+i+'" value="'+d.u+'" placeholder="단위" oninput="renderCard()" style="width:54px;">'
-          + '<input type="text" id="ms-l-'+i+'" value="'+d.l+'" placeholder="레이블" oninput="renderCard()" style="flex:1;">'
+          + '<input type="text" id="ms-n-'+i+'" value="'+vn+'" placeholder="숫자" oninput="renderCard()" style="width:72px;">'
+          + '<input type="text" id="ms-u-'+i+'" value="'+vu+'" placeholder="단위" oninput="renderCard()" style="width:54px;">'
+          + '<input type="text" id="ms-l-'+i+'" value="'+vl+'" placeholder="레이블" oninput="renderCard()" style="flex:1;">'
           + '</div>'
-          + '<input type="text" id="ms-d-'+i+'" value="'+d.d+'" placeholder="설명 (선택)" oninput="renderCard()" style="font-size:11px;">'
+          + '<input type="text" id="ms-d-'+i+'" value="'+vd+'" placeholder="설명 (선택)" oninput="renderCard()" style="font-size:11px;">'
           + '</div>';
   }
   document.getElementById('ms-items').innerHTML = html;
@@ -996,7 +1046,7 @@ function renderCard() {
 
   } else if (curLayout === 'quote') {
     const q = processText(g('in-quote'));
-    const src = g('in-source');
+    const src = processText(g('in-source'));
     const c = curAlign === 'center';
     body.innerHTML = `<div class="lay-quote" style="${aStyle}">
       <div class="q-mark" style="${c?'text-align:center;padding:0;border:none;':''}">"</div>
@@ -1072,7 +1122,7 @@ function renderCard() {
   } else if (curLayout === 'stat') {
     const num = g('in-num');
     const unit = g('in-unit');
-    const lbl = g('in-stat-label');
+    const lbl = processText(g('in-stat-label'));
     const desc = processText(g('in-stat-desc'));
     body.innerHTML = `<div class="lay-stat" style="${aStyle}">
       <div class="stat-num" style="font-size:${fs*2.2}px;">${num}<span class="stat-unit" style="font-size:${fs*0.55}px;">${unit}</span></div>
@@ -1124,8 +1174,8 @@ function renderCard() {
   } else if (curLayout === 'interview') {
     const q = processText(g('in-iv-quote'));
     const init = g('in-iv-init') || '?';
-    const ivName = g('in-iv-name');
-    const role = g('in-iv-role');
+    const ivName = processText(g('in-iv-name'));
+    const role = processText(g('in-iv-role'));
     const badge = g('in-iv-badge');
     const c = curAlign === 'center';
     body.innerHTML = `<div class="lay-iv" style="${aStyle}">
@@ -1149,8 +1199,8 @@ function renderCard() {
     for (let i = 0; i < msCount; i++) {
       const num = g('ms-n-' + i);
       const unit = g('ms-u-' + i);
-      const lbl = g('ms-l-' + i);
-      const desc = g('ms-d-' + i);
+      const lbl = processText(g('ms-l-' + i));
+      const desc = processText(g('ms-d-' + i));
       const isLast = (i + 1) % cols === 0 || i === msCount - 1;
       const is2ndRow = msCount === 4 && i >= 2;
       cells += '<div class="ms-cell" style="'+(is2ndRow?'border-top:1px solid rgba(127,127,127,.15);':'')+'">'
@@ -1169,7 +1219,7 @@ function renderCard() {
     const tcColor = document.getElementById('in-tc-color')?.value || '#144E2C';
     const round = g('in-tc-round');
     const tcName = processText(g('in-tc-name'));
-    const uni = g('in-tc-uni');
+    const uni = processText(g('in-tc-uni'));
     const tagsRaw = g('in-tc-tags');
     const tags = tagsRaw.split(',').map(t=>t.trim()).filter(Boolean);
     const tcDesc = processText(g('in-tc-desc'));
@@ -1231,6 +1281,7 @@ async function saveZip() {
   for (let i = 0; i < cards.length; i++) {
     btn.textContent = `⏳ ${i+1} / ${cards.length} 장 처리 중...`;
     applyCardState(cards[i]);
+    card.style.transform = 'none'; // applyCardSize → updatePreviewScale 덮어쓰기 방지
     await new Promise(r => setTimeout(r, 120)); // 렌더 대기
     const canvas = await html2canvas(card, { scale:1, width:cardW, height:cardH, useCORS:true, allowTaint:true, logging:false });
     const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
@@ -1415,7 +1466,14 @@ document.getElementById('c-bg').addEventListener('input', saveState);
 document.getElementById('c-pt').addEventListener('input', saveState);
 document.getElementById('c-tm').addEventListener('input', saveState);
 document.getElementById('c-ts').addEventListener('input', saveState);
+document.getElementById('c-tag').addEventListener('input', saveState);
+document.getElementById('c-tag-bg').addEventListener('input', saveState);
 document.getElementById('font-size').addEventListener('input', saveState);
+// 슬라이더들 자동저장
+['overlay-opacity','blur-range','logo-size','logo-opacity','cover-pos'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', saveState);
+});
 
 // ★ 동적 입력창 전체에 위임 이벤트 — 레이아웃 전환 후 새로 생긴 입력도 자동 캡처
 document.getElementById('dyn').addEventListener('input', saveState);
