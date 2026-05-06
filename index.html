@@ -329,7 +329,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
 
   <div class="section-label" style="display:flex;justify-content:space-between;align-items:center;">
     내용
-    <button class="emoji-btn" onclick="toggleEmoji(event,null)" style="font-size:12px;">😊 이모지</button>
+    <button class="emoji-btn" onmousedown="event.preventDefault()" onclick="toggleEmoji(event,null)" style="font-size:12px;">😊 이모지</button>
   </div>
   <div style="display:flex;gap:6px;align-items:center;">
     <button onmousedown="event.preventDefault()" onclick="wrapSelection('*')" style="flex:1;background:#1e1e1e;border:1px solid var(--border);color:var(--point);padding:7px 6px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:800;letter-spacing:-.02em;" title="선택한 텍스트를 포인트색으로 강조">B 포인트색</button>
@@ -507,7 +507,9 @@ function updateSlideStrip() {
   const thumbs = document.getElementById('slide-thumbs');
   thumbs.innerHTML = cards.map((c, i) => {
     const icon = LAYOUT_ICONS[c?.layout || 'cover'] || '📌';
-    return `<div class="slide-thumb${i===curCardIdx?' active':''}" onclick="switchCard(${i})">
+    const sz = (c?.cardSize || '1080,1350').split(',').map(Number);
+    const thumbH = Math.round(80 * sz[1] / sz[0]);
+    return `<div class="slide-thumb${i===curCardIdx?' active':''}" onclick="switchCard(${i})" style="height:${thumbH}px;">
       <span class="th-icon">${icon}</span>
       <span class="th-num">${i+1}</span>
       <button class="dup-btn" onclick="event.stopPropagation();duplicateCard(${i})" title="복제">⧉</button>
@@ -515,6 +517,9 @@ function updateSlideStrip() {
     </div>`;
   }).join('');
   document.getElementById('zip-card-count').textContent = cards.length;
+  // 추가 버튼 높이도 현재 카드 비율에 맞춤
+  const addBtn = document.querySelector('.slide-add');
+  if (addBtn) addBtn.style.height = Math.round(80 * cardH / cardW) + 'px';
 }
 
 function switchCard(idx) {
@@ -1327,8 +1332,11 @@ function saveState() {
       };
       localStorage.setItem(SAVE_KEY, JSON.stringify(state));
       const ind = document.getElementById('save-indicator');
-      if (ind) { ind.textContent = '✓ 자동저장됨'; setTimeout(() => { ind.textContent = ''; }, 2000); }
-    } catch(e) {}
+      if (ind) { ind.style.color = ''; ind.textContent = '✓ 자동저장됨'; setTimeout(() => { ind.textContent = ''; }, 2000); }
+    } catch(e) {
+      const ind = document.getElementById('save-indicator');
+      if (ind) { ind.style.color = '#f66'; ind.textContent = '⚠ 저장 실패 (사진 용량 초과)'; setTimeout(() => { ind.textContent = ''; ind.style.color = ''; }, 5000); }
+    }
   }, 600);
 }
 
@@ -1387,12 +1395,21 @@ function toggleEmoji(e, targetId) {
     if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA') && active.id) {
       emojiTargetId = active.id;
     }
+    // 포커스된 필드 없으면 #dyn 첫 번째 필드로 폴백
+    if (!emojiTargetId) {
+      const first = document.querySelector('#dyn textarea, #dyn input[type=text]');
+      if (first && first.id) emojiTargetId = first.id;
+    }
   }
   buildEmojiPicker();
   // 위치: 버튼 기준
   const btn = e.currentTarget;
   const rect = btn.getBoundingClientRect();
-  picker.style.top = (rect.bottom + 6) + 'px';
+  const pickerH = 230;
+  const top = (rect.bottom + 6 + pickerH > window.innerHeight)
+    ? Math.max(0, rect.top - pickerH - 6)
+    : rect.bottom + 6;
+  picker.style.top = top + 'px';
   picker.style.left = Math.min(rect.left, window.innerWidth - 280) + 'px';
   picker.classList.add('show');
 }
@@ -1412,7 +1429,8 @@ function insertEmoji(e, emoji) {
 // ── 텍스트 강조 래퍼 ──────────────────────────────
 function wrapSelection(marker) {
   const active = document.activeElement;
-  const el = (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA'))
+  // #dyn 안 필드만 타깃팅 — in-tag, in-footer-text는 textContent 렌더라 마크업 불필요
+  const el = (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA') && active.closest('#dyn'))
     ? active
     : document.querySelector('#dyn textarea, #dyn input[type=text]');
   if (!el) return;
