@@ -248,6 +248,23 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
     <div class="color-item"><label>태그 배경</label><input type="color" id="c-tag-bg" value="#5FC4D9" oninput="renderCard()"></div>
   </div>
 
+  <div class="toggle-row" style="margin-top:4px;">
+    <label>그라디언트</label>
+    <label class="toggle"><input type="checkbox" id="grad-on" onchange="applyBg();renderCard();saveState()"><span class="toggle-slider"></span></label>
+  </div>
+  <div id="grad-controls" style="display:none;flex-direction:column;gap:6px;margin-top:4px;">
+    <div class="color-row">
+      <div class="color-item"><label>끝 색상</label><input type="color" id="c-bg2" value="#0d2b4a" oninput="applyBg();renderCard();saveState()"></div>
+    </div>
+    <label style="font-size:11px;color:#aaa;">방향</label>
+    <div class="align-btns" id="grad-dir-btns">
+      <button class="align-btn active" onclick="setGradDir('to bottom',this)">↓</button>
+      <button class="align-btn" onclick="setGradDir('to right',this)">→</button>
+      <button class="align-btn" onclick="setGradDir('to bottom right',this)">↘</button>
+      <button class="align-btn" onclick="setGradDir('to bottom left',this)">↙</button>
+    </div>
+  </div>
+
   <div class="section-label">배경 사진</div>
   <input type="file" accept="image/*" onchange="loadPhoto(this)" style="color:#aaa;font-size:12px;">
   <div id="photo-controls" style="display:none;flex-direction:column;gap:6px;">
@@ -390,6 +407,7 @@ let curAlign = 'left';
 let curLogoPos = 'footer-left';
 let bgFit = 'cover';
 let splitFit = 'cover';
+let gradDir = 'to bottom';
 
 // ── 멀티카드 ──────────────────────────────────
 let cards = [];      // 각 카드의 상태 스냅샷 배열
@@ -414,6 +432,9 @@ function getCardState() {
       tag: document.getElementById('c-tag').value,
       tagBg: document.getElementById('c-tag-bg').value,
     },
+    gradOn: document.getElementById('grad-on')?.checked || false,
+    gradBg2: document.getElementById('c-bg2')?.value || '#0d2b4a',
+    gradDir: gradDir,
     tag: document.getElementById('in-tag').value,
     footerText: document.getElementById('in-footer-text').value,
     layoutContents: JSON.parse(JSON.stringify(layoutContents)),
@@ -439,7 +460,16 @@ function applyCardState(state) {
   r.style.setProperty('--point', state.colors?.pt);
   r.style.setProperty('--txt-main', state.colors?.tm);
   r.style.setProperty('--txt-sub', state.colors?.ts);
-  document.getElementById('card').style.background = state.colors?.bg;
+  // 그라디언트 복원
+  const gradOnEl = document.getElementById('grad-on');
+  if (gradOnEl) gradOnEl.checked = state.gradOn || false;
+  const bg2El = document.getElementById('c-bg2');
+  if (bg2El) bg2El.value = state.gradBg2 || '#0d2b4a';
+  gradDir = state.gradDir || 'to bottom';
+  document.querySelectorAll('#grad-dir-btns .align-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes(`'${gradDir}'`));
+  });
+  applyBg();
   // 전역 변수
   curAlign = state.align || 'left';
   bgFit = state.bgFit || 'cover';
@@ -716,6 +746,28 @@ function applyLogo() {
   }
 }
 
+function applyBg() {
+  const bg = document.getElementById('c-bg').value;
+  const on = document.getElementById('grad-on')?.checked;
+  const gc = document.getElementById('grad-controls');
+  if (gc) gc.style.display = on ? 'flex' : 'none';
+  if (on) {
+    const bg2 = document.getElementById('c-bg2').value;
+    document.getElementById('card').style.background = `linear-gradient(${gradDir}, ${bg}, ${bg2})`;
+  } else {
+    document.getElementById('card').style.background = bg;
+  }
+}
+
+function setGradDir(dir, btn) {
+  gradDir = dir;
+  document.querySelectorAll('#grad-dir-btns .align-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyBg();
+  renderCard();
+  saveState();
+}
+
 function applyColors() {
   const bg = document.getElementById('c-bg').value;
   const pt = document.getElementById('c-pt').value;
@@ -726,7 +778,7 @@ function applyColors() {
   r.style.setProperty('--point', pt);
   r.style.setProperty('--txt-main', tm);
   r.style.setProperty('--txt-sub', ts);
-  document.getElementById('card').style.background = bg;
+  applyBg();
   renderCard();
 }
 
@@ -1486,6 +1538,7 @@ document.getElementById('c-tm').addEventListener('input', saveState);
 document.getElementById('c-ts').addEventListener('input', saveState);
 document.getElementById('c-tag').addEventListener('input', saveState);
 document.getElementById('c-tag-bg').addEventListener('input', saveState);
+document.getElementById('c-bg2').addEventListener('input', saveState);
 document.getElementById('font-size').addEventListener('input', saveState);
 // 슬라이더들 자동저장
 ['overlay-opacity','blur-range','logo-size','logo-opacity','cover-pos'].forEach(id => {
