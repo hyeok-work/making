@@ -46,7 +46,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
 .align-btn{flex:1;background:#1e1e1e;border:1px solid var(--border);color:#aaa;padding:6px;border-radius:5px;cursor:pointer;font-size:17px;transition:all .15s;}
 .align-btn:hover{border-color:#666;color:#fff;}
 .align-btn.active{border-color:var(--point);color:var(--point);background:#111;}
-.save-btn{background:var(--point);color:#fff;border:none;padding:14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:14px;margin-top:4px;width:100%;letter-spacing:-.02em;}
+.save-btn{background:var(--point);color:#0a1628;border:none;padding:14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:14px;margin-top:4px;width:100%;letter-spacing:-.02em;}
 .save-btn:hover{opacity:.9;}
 
 /* ── 미리보기 ── */
@@ -203,7 +203,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
 .slide-thumb:hover .del-btn,.slide-thumb:hover .dup-btn{display:flex;}
 .slide-add{flex-shrink:0;width:80px;height:100px;border-radius:10px;background:none;border:2px dashed #333;color:#555;font-size:30px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
 .slide-add:hover{border-color:var(--point);color:var(--point);background:#111;}
-.zip-btn{background:#0FB297;color:#fff;border:none;padding:14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:13px;margin-top:4px;width:100%;letter-spacing:-.02em;}
+.zip-btn{background:#0FB297;color:#052e25;border:none;padding:14px;border-radius:8px;font-weight:800;cursor:pointer;font-size:13px;margin-top:4px;width:100%;letter-spacing:-.02em;}
 .zip-btn:hover{opacity:.9;}
 .zip-btn:disabled{opacity:.5;cursor:not-allowed;}
 
@@ -220,12 +220,54 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
 .emoji-grid::-webkit-scrollbar-thumb{background:#444;border-radius:2px;}
 .emoji-item{background:none;border:none;font-size:22px;padding:5px 2px;border-radius:4px;cursor:pointer;text-align:center;line-height:1;width:100%;}
 .emoji-item:hover{background:#333;}
+
+/* ── 테마 토글 버튼 ── */
+#theme-toggle{margin-left:auto;background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:15px;padding:3px 8px;color:#888;transition:all .15s;flex-shrink:0;}
+#theme-toggle:hover{border-color:#888;background:#1e1e1e;}
+
+/* ══════════════════════════════════════
+   밝은 모드 (Light Mode)
+══════════════════════════════════════ */
+body.light-mode{background:#f0f2f5;color:#1a1a2e;--bg-dark:#f0f2f5;--panel:#ffffff;--input-bg:#f3f4f6;--border:#e1e4e8;}
+body.light-mode .editor{background:#ffffff;border-color:#e1e4e8;}
+body.light-mode .editor h2{border-color:#e1e4e8;color:#1a1a2e;}
+body.light-mode .section-label{color:#9a9aaa;}
+body.light-mode label{color:#5a5a6a;}
+body.light-mode input[type=text],body.light-mode textarea{background:#f3f4f6;border-color:#e1e4e8;color:#1a1a2e;}
+body.light-mode input[type=text]:focus,body.light-mode textarea:focus{border-color:var(--point);}
+body.light-mode input[type=color]{background:#f3f4f6;border-color:#e1e4e8;}
+body.light-mode select#card-size{background:#f3f4f6!important;border-color:#e1e4e8!important;color:#1a1a2e!important;}
+body.light-mode .tmpl-btn{background:#f3f4f6;border-color:#e1e4e8;color:#5a5a6a;}
+body.light-mode .tmpl-btn:hover{border-color:#bbb;color:#1a1a2e;}
+body.light-mode .tmpl-btn.active{background:var(--point);border-color:var(--point);color:#0a1628;}
+body.light-mode .align-btn{background:#f3f4f6;border-color:#e1e4e8;color:#5a5a6a;}
+body.light-mode .align-btn:hover{border-color:#bbb;color:#1a1a2e;}
+body.light-mode .align-btn.active{background:var(--point);border-color:var(--point);color:#0a1628;}
+body.light-mode .toggle-row label{color:#3a3a4a;}
+body.light-mode .toggle-slider{background:#ccd0d5;}
+body.light-mode .slide-strip{border-color:#e1e4e8;}
+body.light-mode .slide-thumb{background:#f3f4f6;border-color:#e1e4e8;color:#aaa;}
+body.light-mode .slide-thumb:hover{background:#e8eaed;border-color:#bbb;color:#3a3a4a;}
+body.light-mode .slide-thumb.active{background:var(--point);border-color:var(--point);color:#0a1628;}
+body.light-mode .slide-add{border-color:#ccc;color:#aaa;}
+body.light-mode .slide-add:hover{border-color:var(--point);color:var(--point);background:#eef2ff;}
+body.light-mode .emoji-btn{border-color:#e1e4e8;color:#888;}
+body.light-mode .emoji-btn:hover{border-color:#bbb;background:#f3f4f6;}
+body.light-mode .emoji-picker{background:#ffffff;border-color:#d1d5db;box-shadow:0 8px 32px rgba(0,0,0,.12);}
+body.light-mode .emoji-cat-btn{border-color:#d1d5db;color:#888;}
+body.light-mode .emoji-cat-btn.active,body.light-mode .emoji-cat-btn:hover{border-color:var(--point);color:var(--point);}
+body.light-mode .emoji-item:hover{background:#f0f2f5;}
+body.light-mode .emoji-grid::-webkit-scrollbar-thumb{background:#ccc;}
+body.light-mode .preview{background:#dde1e7;}
+body.light-mode .slider-val{color:#5a5a6a;}
+body.light-mode #theme-toggle{border-color:#e1e4e8;color:#666;}
+body.light-mode #theme-toggle:hover{border-color:#bbb;background:#f3f4f6;}
 </style>
 </head>
 <body>
 
 <div class="editor">
-  <h2>카드뉴스 메이커 v1.2 <span id="save-indicator" style="font-size:10px;color:#555;font-weight:400;margin-left:6px;"></span></h2>
+  <h2 style="display:flex;align-items:center;">카드뉴스 메이커 v1.2 <span id="save-indicator" style="font-size:10px;color:#555;font-weight:400;margin-left:6px;"></span><button id="theme-toggle" onclick="toggleTheme()" title="밝은/어두운 모드 전환">☀️</button></h2>
   <div class="slide-strip" id="slide-strip">
     <div class="slide-thumbs" id="slide-thumbs"></div>
     <button class="slide-add" onclick="addCard()" title="카드 추가">+</button>
@@ -284,7 +326,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
       <button class="align-btn" onclick="setBgFit('contain',this)">전체 보기</button>
       <button class="align-btn" onclick="setBgFit('fill',this)">늘리기</button>
     </div>
-    <button onclick="clearPhoto()" style="background:#1e1e1e;border:1px solid #333;color:#999;padding:6px;border-radius:5px;cursor:pointer;font-size:11px;">사진 제거</button>
+    <button onclick="clearPhoto()" style="background:var(--input-bg);border:1px solid var(--border);color:#777;padding:6px;border-radius:5px;cursor:pointer;font-size:11px;">사진 제거</button>
   </div>
 
   <div class="section-label">로고 (PNG 권장)</div>
@@ -306,7 +348,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
       <input type="range" id="logo-opacity" min="10" max="100" value="80" oninput="renderCard()">
       <span class="slider-val" id="logo-op-val">80%</span>
     </div>
-    <button onclick="clearLogo()" style="background:#1e1e1e;border:1px solid #333;color:#999;padding:6px;border-radius:5px;cursor:pointer;font-size:11px;">로고 제거</button>
+    <button onclick="clearLogo()" style="background:var(--input-bg);border:1px solid var(--border);color:#777;padding:6px;border-radius:5px;cursor:pointer;font-size:11px;">로고 제거</button>
   </div>
 
   <div class="section-label">레이아웃</div>
@@ -349,7 +391,7 @@ input[type=color]{width:100%;height:30px;padding:2px;cursor:pointer;border:1px s
     <button class="emoji-btn" onmousedown="event.preventDefault()" onclick="toggleEmoji(event,null)" style="font-size:12px;">😊 이모지</button>
   </div>
   <div style="display:flex;gap:6px;align-items:center;">
-    <button onmousedown="event.preventDefault()" onclick="wrapSelection('*')" style="flex:1;background:#1e1e1e;border:1px solid var(--border);color:var(--point);padding:7px 6px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:800;letter-spacing:-.02em;" title="선택한 텍스트를 포인트색으로 강조">B 포인트색</button>
+    <button onmousedown="event.preventDefault()" onclick="wrapSelection('*')" style="flex:1;background:var(--input-bg);border:1px solid var(--border);color:var(--point);padding:7px 6px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:800;letter-spacing:-.02em;" title="선택한 텍스트를 포인트색으로 강조">B 포인트색</button>
     <button onmousedown="event.preventDefault()" onclick="wrapSelection('=')" style="flex:1;background:var(--point);border:1px solid var(--point);color:#111;padding:7px 6px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:800;letter-spacing:-.02em;" title="선택한 텍스트에 하이라이트">▌하이라이트</button>
   </div>
   <div style="font-size:10px;color:#444;line-height:1.5;">직접 입력: <code style="color:#666;">*강조*</code> &nbsp;·&nbsp; <code style="color:#666;">=하이라이트=</code></div>
@@ -858,7 +900,7 @@ function buildDynInputs() {
       <label>사진 (이 레이아웃 전용)</label>
       <input type="file" accept="image/*" onchange="loadSplitPhoto(this)" style="color:#aaa;font-size:12px;">
       <div id="split-photo-clear" style="display:${splitPhotoData?'block':'none'};">
-        <button onclick="clearSplitPhoto()" style="background:#1e1e1e;border:1px solid #333;color:#999;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;width:100%;">사진 제거</button>
+        <button onclick="clearSplitPhoto()" style="background:var(--input-bg);border:1px solid var(--border);color:#777;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;width:100%;">사진 제거</button>
       </div>
       <label>사진 맞춤</label>
       <div class="align-btns" id="split-fit-btns">
@@ -896,12 +938,12 @@ function buildDynInputs() {
     dyn.innerHTML = `
       <label>상단 제목 (선택)</label>
       <input type="text" id="in-ba-title" value="무엇이 달라졌을까요?" oninput="renderCard()">
-      <div style="border-top:1px solid #2a2a2a;margin:4px 0;"></div>
+      <div style="border-top:1px solid var(--border);margin:4px 0;"></div>
       <label style="color:#888;">▲ BEFORE</label>
       <input type="text" id="in-ba-blabel" value="BEFORE" oninput="renderCard()">
       <input type="text" id="in-ba-bval" value="연 12회" placeholder="수치 또는 핵심어" oninput="renderCard()">
       <input type="text" id="in-ba-bdesc" value="지원 프로그램 운영" placeholder="부연 설명" oninput="renderCard()">
-      <div style="border-top:1px solid #2a2a2a;margin:4px 0;"></div>
+      <div style="border-top:1px solid var(--border);margin:4px 0;"></div>
       <label style="color:var(--point);">▼ AFTER</label>
       <input type="text" id="in-ba-alabel" value="AFTER" oninput="renderCard()">
       <input type="text" id="in-ba-aval" value="연 36회+" placeholder="수치 또는 핵심어" oninput="renderCard()">
@@ -999,7 +1041,7 @@ function buildTlItems() {
     const vy = (prev['y'+i] !== undefined) ? prev['y'+i] : d.y;
     const vt = (prev['t'+i] !== undefined) ? prev['t'+i] : d.t;
     const vd = (prev['d'+i] !== undefined) ? prev['d'+i] : d.d;
-    html += '<div style="display:flex;flex-direction:column;gap:3px;padding:6px 0;border-bottom:1px solid #222;">'
+    html += '<div style="display:flex;flex-direction:column;gap:3px;padding:6px 0;border-bottom:1px solid var(--border);">'
           + '<input type="text" id="tl-y-'+i+'" value="'+vy.replace(/"/g,'&quot;')+'" placeholder="연도/시기" oninput="renderCard()" style="font-size:11px;">'
           + '<input type="text" id="tl-t-'+i+'" value="'+vt.replace(/"/g,'&quot;')+'" placeholder="제목" oninput="renderCard()">'
           + '<input type="text" id="tl-d-'+i+'" value="'+vd.replace(/"/g,'&quot;')+'" placeholder="설명 (선택)" oninput="renderCard()" style="font-size:11px;">'
@@ -1032,7 +1074,7 @@ function buildMsItems() {
     const vu = (prev['u'+i] !== undefined) ? prev['u'+i] : d.u;
     const vl = (prev['l'+i] !== undefined) ? prev['l'+i] : d.l;
     const vd = (prev['d'+i] !== undefined) ? prev['d'+i] : d.d;
-    html += '<div style="display:flex;flex-direction:column;gap:3px;padding:5px 0;border-bottom:1px solid #222;">'
+    html += '<div style="display:flex;flex-direction:column;gap:3px;padding:5px 0;border-bottom:1px solid var(--border);">'
           + '<div style="display:flex;gap:5px;">'
           + '<input type="text" id="ms-n-'+i+'" value="'+vn+'" placeholder="숫자" oninput="renderCard()" style="width:72px;">'
           + '<input type="text" id="ms-u-'+i+'" value="'+vu+'" placeholder="단위" oninput="renderCard()" style="width:54px;">'
@@ -1549,6 +1591,23 @@ document.getElementById('font-size').addEventListener('input', saveState);
 // ★ 동적 입력창 전체에 위임 이벤트 — 레이아웃 전환 후 새로 생긴 입력도 자동 캡처
 document.getElementById('dyn').addEventListener('input', saveState);
 document.getElementById('dyn').addEventListener('change', saveState);
+
+// ── 밝은/어두운 모드 전환 ──────────────────────────────
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light-mode');
+  document.getElementById('theme-toggle').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('cardnews_theme', isLight ? 'light' : 'dark');
+}
+
+// 저장된 테마 불러오기
+(function() {
+  const saved = localStorage.getItem('cardnews_theme');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '🌙';
+  }
+})();
 </script>
 
 <!-- 이모지 피커 패널 -->
