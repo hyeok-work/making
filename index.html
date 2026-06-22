@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>노동이사, 나는 어떤 사람인가 — 가치 여정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --navy-soft:#33476f;
+    --cream:#F6F1E7;
+    --cream-deep:#EFE7D6;
+    --terracotta:#C75B39;
+    --terracotta-soft:#e2a98f;
+    --gold:#D9A441;
+    --wine:#6E3B3B;
+    --wine-soft:#caa3a3;
+    --charcoal:#2B2620;
+    --line:#DCD1B4;
+    --shadow: 0 18px 40px -22px rgba(27,42,74,0.45);
+    --radius: 18px;
+    --maxw: 660px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background:
+      radial-gradient(ellipse at top, #fffdf7 0%, var(--cream) 55%, var(--cream-deep) 100%);
+    color:var(--charcoal);
+    font-family:'Noto Sans KR', sans-serif;
+    min-height:100%;
+  }
+
+  body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 18px 60px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--maxw);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    gap:12px;
+  }
+  .brand{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:15px;
+    letter-spacing:0.04em;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .brand small{
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:400;
+    font-size:11px;
+    color:#8a8170;
+    letter-spacing:0;
+  }
+  .reset-link{
+    background:none;
+    border:none;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    color:#8a8170;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:4px 2px;
+  }
+  .reset-link:hover{ color:var(--terracotta); }
+
+  /* ---------- chair signature ---------- */
+  .chair-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    margin:6px 0 22px;
+  }
+  .chair-icon{
+    width:64px;
+    height:auto;
+    transition:filter .6s ease;
+  }
+  .chair-caption{
+    font-size:11px;
+    color:#8a8170;
+    letter-spacing:0.04em;
+  }
+  .chair-caption strong{ color:var(--navy); }
+
+  /* ---------- card ---------- */
+  .card{
+    background:#fffdf8;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:32px 28px 28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:5px;
+    background:linear-gradient(90deg, var(--terracotta), var(--gold) 55%, var(--wine));
+  }
+
+  .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.12em;
+    color:var(--terracotta);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .eyebrow.is-negative{ color:var(--wine); }
+  .eyebrow.is-final{ color:var(--gold); }
+
+  h1.headline{
+    font-family:'Song Myung', serif;
+    font-weight:400;
+    font-size:30px;
+    line-height:1.35;
+    color:var(--navy);
+    margin:0 0 6px;
+  }
+  h2.step-title{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:21px;
+    line-height:1.4;
+    color:var(--navy);
+    margin:0 0 8px;
+  }
+  .rule{
+    width:46px; height:3px;
+    background:var(--gold);
+    border:none;
+    margin:0 0 16px;
+    border-radius:2px;
+  }
+
+  p.lede{
+    font-size:14.5px;
+    line-height:1.7;
+    color:#564f42;
+    margin:0 0 4px;
+  }
+  p.desc{
+    font-size:13.5px;
+    line-height:1.7;
+    color:#76705f;
+    margin:0 0 20px;
+  }
+
+  .meta-row{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin:18px 0 26px;
+    font-size:12.5px;
+    color:var(--navy);
+  }
+  .meta-row span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--cream-deep);
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .meta-row b{ font-weight:700; }
+
+  /* ---------- counter ---------- */
+  .counter-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .counter{
+    font-size:13px;
+    font-weight:700;
+    color:var(--navy);
+    background:var(--cream-deep);
+    padding:6px 14px;
+    border-radius:999px;
+  }
+  .counter b{ color:var(--terracotta); font-size:15px; }
+  .counter.is-negative b{ color:var(--wine); }
+  .helper-msg{
+    font-size:12.5px;
+    color:#8a8170;
+  }
+
+  /* ---------- chip grid ---------- */
+  .chip-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-bottom:24px;
+  }
+  .chip{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--navy);
+    background:#fff;
+    border:1.4px solid var(--line);
+    border-radius:999px;
+    padding:9px 16px;
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
+  }
+  .chip:hover{ border-color:var(--terracotta); transform:translateY(-1px); }
+  .chip:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+  .chip--active{
+    background:var(--navy);
+    border-color:var(--navy);
+    color:#fff;
+  }
+  .chip--active:hover{ border-color:var(--navy); }
+
+  /* remove-mode visual: selected = marked to let go */
+  .chip--remove.chip--active{
+    background:#fff;
+    border-color:var(--wine);
+    color:var(--wine);
+    text-decoration:line-through;
+    text-decoration-color:var(--wine);
+  }
+
+  /* negative-pool select mode tint */
+  .chip--wine.chip--active{
+    background:var(--wine);
+    border-color:var(--wine);
+  }
+
+  /* ---------- final step two-group ---------- */
+  .group-label{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    color:#8a8170;
+    text-transform:uppercase;
+    margin:18px 0 8px;
+  }
+  .group-label:first-of-type{ margin-top:0; }
+
+  /* ---------- transition step ---------- */
+  .trans-block{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 12px;
+    margin-bottom:14px;
+    background:#fffaf2;
+  }
+  .trans-block .from-word{
+    font-size:13px;
+    color:var(--wine);
+    font-weight:700;
+    margin-bottom:2px;
+  }
+  .trans-block .arrow-note{
+    font-size:12px;
+    color:#8a8170;
+    margin-bottom:10px;
+  }
+  .trans-options{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- buttons ---------- */
+  .actions{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-top:8px;
+  }
+  .btn{
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    border:none;
+    border-radius:999px;
+    padding:13px 26px;
+    cursor:pointer;
+    transition:opacity .18s ease, transform .12s ease;
+  }
+  .btn:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+  .btn-primary{
+    background:var(--navy);
+    color:#fff;
+  }
+  .btn-primary:disabled{
+    background:#cfc8b6;
+    color:#8a8170;
+    cursor:not-allowed;
+  }
+  .btn-primary:not(:disabled):hover{ transform:translateY(-1px); }
+  .btn-ghost{
+    background:none;
+    color:#8a8170;
+    text-decoration:underline;
+    padding:13px 6px;
+  }
+
+  .progress-dots{
+    display:flex;
+    gap:5px;
+  }
+  .progress-dots i{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--line);
+    display:block;
+  }
+  .progress-dots i.is-done{ background:var(--gold); }
+  .progress-dots i.is-current{ background:var(--terracotta); }
+
+  /* ---------- intro ---------- */
+  .intro-cta{
+    width:100%;
+    margin-top:8px;
+  }
+  .intro-cta .btn-primary{ width:100%; padding:16px; font-size:15.5px; }
+
+  .disclaimer{
+    font-size:11.5px;
+    color:#9a937f;
+    line-height:1.6;
+    margin-top:18px;
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+  }
+
+  /* ---------- result ---------- */
+  .value-cards{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:20px 0 26px;
+  }
+  .value-card{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    background:linear-gradient(100deg, var(--cream-deep), #fffdf8);
+    border:1px solid var(--line);
+    border-left:4px solid var(--gold);
+    border-radius:12px;
+    padding:14px 18px;
+  }
+  .value-card .num{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:13px;
+    color:var(--gold);
+  }
+  .value-card .word{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:19px;
+    color:var(--navy);
+  }
+
+  .prompt-box{
+    margin-top:8px;
+  }
+  .prompt-box label{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:8px;
+  }
+  textarea.prompt-text{
+    width:100%;
+    min-height:280px;
+    resize:vertical;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12.8px;
+    line-height:1.65;
+    color:#564f42;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+  }
+  .copy-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+  }
+  .copy-status{
+    font-size:12.5px;
+    color:var(--gold);
+    font-weight:700;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .copy-status.is-visible{ opacity:1; }
+
+  .result-actions{
+    margin-top:26px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  footer.credit{
+    text-align:center;
+    font-size:11px;
+    color:#a8a08c;
+    margin-top:26px;
+    letter-spacing:0.02em;
+    line-height:1.7;
+  }
+
+  @media (max-width:480px){
+    .card{ padding:24px 18px 22px; }
+    h1.headline{ font-size:25px; }
+    h2.step-title{ font-size:18px; }
+    .actions{ flex-direction:column-reverse; align-items:stretch; }
+    .actions .btn{ width:100%; text-align:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">노동이사 가치 여정 <small>공공상생연대기금</small></div>
+      <button class="reset-link" id="resetBtn" type="button">처음부터 다시</button>
+    </div>
+
+    <div class="chair-box">
+      <svg class="chair-icon" viewBox="0 0 200 240" aria-hidden="true">
+        <defs>
+          <clipPath id="chairFillClip">
+            <rect id="fillRect" x="0" y="240" width="200" height="0" />
+          </clipPath>
+        </defs>
+        <g id="chairFilled" clip-path="url(#chairFillClip)">
+          <rect x="70" y="20" width="60" height="90" rx="6" fill="var(--gold)"/>
+          <rect x="40" y="110" width="120" height="24" rx="4" fill="var(--gold)"/>
+          <line x1="55" y1="134" x2="50" y2="220" stroke="var(--gold)" stroke-width="10" stroke-linecap="round"/>
+          <line x1="145" y1="134" x2="150" y2="220" stroke="var(--gold)" stroke-width="10" stroke-linecap="round"/>
+          <line x1="70" y1="134" x2="68" y2="220" stroke="var(--gold)" stroke-width="10" stroke-linecap="round"/>
+          <line x1="130" y1="134" x2="132" y2="220" stroke="var(--gold)" stroke-width="10" stroke-linecap="round"/>
+        </g>
+        <g fill="none" stroke="var(--navy)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="70" y="20" width="60" height="90" rx="6"/>
+          <rect x="40" y="110" width="120" height="24" rx="4"/>
+          <line x1="55" y1="134" x2="50" y2="220"/>
+          <line x1="145" y1="134" x2="150" y2="220"/>
+          <line x1="70" y1="134" x2="68" y2="220"/>
+          <line x1="130" y1="134" x2="132" y2="220"/>
+        </g>
+      </svg>
+      <div class="chair-caption" id="chairCaption">이사회의 빈 의자, <strong>0%</strong> 채워짐</div>
+    </div>
+
+    <main class="card" id="app" aria-live="polite"></main>
+
+    <footer class="credit">ⓒ 공공상생연대기금 · 노동이사제 가치 자가진단 도구<br/>참고: 「나는 노동자로 이사회에 참석한다 - 공공기관 노동이사제 둘러보기」(공공상생연대기금, 2022)</footer>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------------------------------------------------------
+     데이터: 노동이사 자질 단어 풀
+  --------------------------------------------------------------- */
+  var POSITIVE_POOL = [
+    "책임감","신뢰","공정성","소통","경청","협력","연대","공감",
+    "독립성","전문성","통찰력","분석력","재무감각","법률이해","거버넌스이해",
+    "의사결정력","결단력","용기","리더십","조정력","협상력","균형감각","투명성",
+    "윤리의식","책임의식","인내심","자기관리","시간관리","학습의지","적응력",
+    "위기대응력","현장감각","실무경험","대표성","네트워킹","이해관계조정력",
+    "겸손","정직","자신감","추진력","협업정신","경영감각",
+    "노동자정체성","권리주장력","자기주도학습력"
+  ];
+
+  var NEGATIVE_POOL = [
+    "권위에 대한 두려움","전문성 부족 불안","경영진과의 거리감","노동조합과의 거리감","정보비대칭",
+    "시간부족","법률지식 부족","재무지표 이해부족","의사결정 부담감","고립감",
+    "양쪽 입장 사이의 갈등","비판에 대한 두려움","실패에 대한 두려움","우유부단함","소극성",
+    "회피성향","신뢰부족","거수기가 될 것 같은 불안","책임소재 불분명함","조직 내 소외감",
+    "번아웃 우려","갈등조정의 어려움","평가에 대한 부담","대표성에 대한 부담","일과 삶의 균형 붕괴 우려",
+    "이중정체성에서 오는 내적갈등","직원 신분을 이용한 압박 우려","비밀유지의무로 인한 답답함",
+    "안건부의권 등 권한 부족에 대한 답답함","전문지식 없이 끌려갈 것 같은 두려움"
+  ];
+
+  var TRANSITION_MAP = {
+    "권위에 대한 두려움": ["용기","자신감","당당함"],
+    "전문성 부족 불안": ["전문성","학습의지","성장지향"],
+    "경영진과의 거리감": ["소통","신뢰","협력"],
+    "노동조합과의 거리감": ["연대","공감","대표성"],
+    "정보비대칭": ["투명성","통찰력","정보공유력"],
+    "시간부족": ["시간관리","우선순위감각","효율성"],
+    "법률지식 부족": ["법률이해","학습의지","전문성"],
+    "재무지표 이해부족": ["재무감각","분석력","학습의지"],
+    "의사결정 부담감": ["결단력","책임의식","균형감각"],
+    "고립감": ["연대","네트워킹","소통"],
+    "양쪽 입장 사이의 갈등": ["조정력","균형감각","공정성"],
+    "비판에 대한 두려움": ["자신감","겸손","성장지향"],
+    "실패에 대한 두려움": ["용기","인내심","회복탄력성"],
+    "우유부단함": ["결단력","추진력","확신"],
+    "소극성": ["적극성","용기","추진력"],
+    "회피성향": ["책임의식","용기","정면돌파력"],
+    "신뢰부족": ["신뢰","정직","일관성"],
+    "거수기가 될 것 같은 불안": ["주체성","자신감","대표성"],
+    "책임소재 불분명함": ["책임의식","투명성","명확성"],
+    "조직 내 소외감": ["소속감","연대","네트워킹"],
+    "번아웃 우려": ["자기관리","균형감각","인내심"],
+    "갈등조정의 어려움": ["조정력","협상력","공감"],
+    "평가에 대한 부담": ["자신감","성장지향","겸손"],
+    "대표성에 대한 부담": ["대표성","책임의식","연대"],
+    "일과 삶의 균형 붕괴 우려": ["균형감각","자기관리","인내심"],
+    "이중정체성에서 오는 내적갈등": ["균형감각","노동자정체성","자신감"],
+    "직원 신분을 이용한 압박 우려": ["용기","권리주장력","자신감"],
+    "비밀유지의무로 인한 답답함": ["신뢰","균형감각","책임의식"],
+    "안건부의권 등 권한 부족에 대한 답답함": ["용기","주체성","추진력"],
+    "전문지식 없이 끌려갈 것 같은 두려움": ["전문성","학습의지","자기주도학습력"]
+  };
+
+  /* ---------------------------------------------------------------
+     상태
+  --------------------------------------------------------------- */
+  var STEP_SEQUENCE = ["intro","p1","p2","p3","n1","n2","t","f","result"];
+  var GATE_ORDER = ["p1","p2","p3","n1","n2","t","f"];
+  var TOTAL_GATES = GATE_ORDER.length; // 7
+
+  var state = {
+    stepIndex: 0,
+    p1: [], p2: [], p3: [],
+    n1: [], n2: [],
+    transitionWords: [],
+    finalValues: [],
+    droppedPositive: { step1: [], step2: [] },
+    droppedNegative: [],
+    oppositeChoices: [],
+    finalBreakdown: { already_have: [], aspiring_to: [] },
+    journeyLog: {}
+  };
+
+  var app = document.getElementById('app');
+  var fillRect = document.getElementById('fillRect');
+  var chairCaption = document.getElementById('chairCaption');
+
+  function resetAll(){
+    state = {
+      stepIndex:0, p1:[], p2:[], p3:[], n1:[], n2:[], transitionWords:[], finalValues:[],
+      droppedPositive:{ step1:[], step2:[] }, droppedNegative:[], oppositeChoices:[],
+      finalBreakdown:{ already_have:[], aspiring_to:[] },
+      journeyLog:{}
+    };
+    setProgress(0);
+    render();
+  }
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(state.stepIndex === 0 || confirm('지금까지의 선택이 모두 초기화됩니다. 처음부터 다시 시작할까요?')){
+      resetAll();
+    }
+  });
+
+  function setProgress(pct){
+    var h = 240 * (pct/100);
+    fillRect.setAttribute('y', 240 - h);
+    fillRect.setAttribute('height', h);
+    chairCaption.innerHTML = (pct >= 100)
+      ? '이사회의 빈 의자, <strong>채워짐</strong>'
+      : '이사회의 빈 의자, <strong>' + Math.round(pct) + '%</strong> 채워짐';
+  }
+
+  function currentKey(){ return STEP_SEQUENCE[state.stepIndex]; }
+
+  function gateNumber(key){
+    return GATE_ORDER.indexOf(key) + 1;
+  }
+
+  function completeGate(){
+    setProgress(gateNumber(currentKey())/TOTAL_GATES*100);
+  }
+
+  function goTo(key){
+    state.stepIndex = STEP_SEQUENCE.indexOf(key);
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function goNext(){
+    state.stepIndex = Math.min(state.stepIndex+1, STEP_SEQUENCE.length-1);
+    if(currentKey() === 'result'){ setProgress(100); }
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  /* ---------------------------------------------------------------
+     공용: 칩 선택 단계 렌더러
+     mode: 'keep'(고른 것 = 결과) | 'remove'(고른 것 = 제외, 나머지 = 결과)
+  --------------------------------------------------------------- */
+  function renderPickStep(opts){
+    var picked = new Set();
+    var stepStart = Date.now();
+    var toggleCount = 0;
+
+    var html = '';
+    html += '<div class="eyebrow ' + (opts.eyebrowClass||'') + '">' + opts.eyebrowText + '</div>';
+    html += '<h2 class="step-title">' + opts.titleHtml + '</h2>';
+    html += '<hr class="rule" />';
+    if(opts.desc){ html += '<p class="desc">' + opts.desc + '</p>'; }
+    html += '<div class="counter-bar">';
+    html += '<div class="counter ' + (opts.chipVariant==='wine' ? 'is-negative':'') + '" id="counterEl">' + opts.counterLabel + ' <b id="counterNum">0</b> / ' + opts.target + '</div>';
+    html += '<div class="helper-msg" id="helperMsg"></div>';
+    html += '</div>';
+    html += '<div class="chip-grid" id="chipGrid"></div>';
+    html += '<div class="actions">';
+    html += renderDots();
+    html += '<button class="btn btn-primary" id="nextBtn" disabled>' + (opts.nextLabel || '다음으로') + '</button>';
+    html += '</div>';
+
+    app.innerHTML = html;
+
+    var grid = document.getElementById('chipGrid');
+    var counterNum = document.getElementById('counterNum');
+    var helperMsg = document.getElementById('helperMsg');
+    var nextBtn = document.getElementById('nextBtn');
+
+    opts.list.forEach(function(word){
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      var cls = 'chip';
+      if(opts.mode === 'remove') cls += ' chip--remove';
+      if(opts.chipVariant === 'wine' && opts.mode !== 'remove') cls += ' chip--wine';
+      chip.className = cls;
+      chip.textContent = word;
+      chip.setAttribute('aria-pressed','false');
+      chip.addEventListener('click', function(){
+        if(picked.has(word)){
+          picked.delete(word);
+          chip.classList.remove('chip--active');
+          chip.setAttribute('aria-pressed','false');
+          toggleCount++;
+        } else {
+          if(picked.size >= opts.target){
+            helperMsg.textContent = '이미 ' + opts.target + '개를 골랐어요. 다른 단어를 먼저 내려놓아 주세요.';
+            return;
+          }
+          picked.add(word);
+          chip.classList.add('chip--active');
+          chip.setAttribute('aria-pressed','true');
+          toggleCount++;
+        }
+        helperMsg.textContent = '';
+        counterNum.textContent = picked.size;
+        nextBtn.disabled = picked.size !== opts.target;
+      });
+      grid.appendChild(chip);
+    });
+
+    nextBtn.addEventListener('click', function(){
+      var pickedArr = Array.from(picked);
+      var result;
+      if(opts.mode === 'keep'){
+        result = pickedArr;
+      } else {
+        result = opts.list.filter(function(w){ return !picked.has(w); });
+      }
+      if(opts.stageKey){
+        state.journeyLog[opts.stageKey] = { duration_ms: Date.now()-stepStart, total_toggles: toggleCount };
+      }
+      opts.onDone(result, pickedArr);
+    });
+  }
+
+  function renderDots(){
+    var idx = GATE_ORDER.indexOf(currentKey());
+    var html = '<div class="progress-dots">';
+    GATE_ORDER.forEach(function(k, i){
+      var cls = i < idx ? 'is-done' : (i === idx ? 'is-current' : '');
+      html += '<i class="' + cls + '"></i>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  /* ---------------------------------------------------------------
+     각 단계 렌더 함수
+  --------------------------------------------------------------- */
+  function renderIntro(){
+    var html = '';
+    html += '<div class="eyebrow">노동이사 가치 자가진단</div>';
+    html += '<h1 class="headline">나는 어떤 노동이사가<br/>될 수 있을까요</h1>';
+    html += '<hr class="rule" />';
+    html += '<p class="lede">바쁜 노동이사·후보자를 위한 간편 버전입니다. 핵심만 빠르게 골라보세요.</p>';
+    html += '<p class="desc">45개의 자질 단어와 30개의 고민 단어 사이를 오가며, 고르고 또 내려놓는 과정을 통해 지금 나에게 가장 중요한 핵심 가치 3가지를 만나게 됩니다. 정답은 없습니다. 끌리는 대로 따라가 보세요.</p>';
+    html += '<p class="desc">이 여정은 노동이사의 성공을 가치와 역량의 합으로 보고 그 두 축을 따라가도록 설계되었습니다.</p>';
+    html += '<div class="meta-row">';
+    html += '<span>🪑 <b>7</b>단계</span>';
+    html += '<span>⏱ <b>7~10</b>분 소요</span>';
+    html += '<span>✺ 핵심 가치 <b>3</b>개</span>';
+    html += '</div>';
+    html += '<div class="intro-cta"><button class="btn btn-primary" id="startBtn">여정 시작하기</button></div>';
+    app.innerHTML = html;
+    document.getElementById('startBtn').addEventListener('click', function(){ goNext(); });
+  }
+
+  function renderP1(){
+    renderPickStep({
+      eyebrowText: '1단계 · 플러스 에너지',
+      titleHtml: '나에게 울림이 있는<br/>자질 단어를 10개 골라주세요',
+      desc: '지금 내 안에 있거나, 노동이사로서 갖고 싶은 자질을 느껴보세요. 서두르지 않아도 됩니다.',
+      list: POSITIVE_POOL,
+      target: 10,
+      mode: 'keep',
+      counterLabel: '선택',
+      chipVariant: 'terracotta',
+      stageKey: 'positive_select',
+      onDone: function(result){
+        state.p1 = result;
+        completeGate();
+        goTo('p2');
+      }
+    });
+  }
+
+  function renderP2(){
+    renderPickStep({
+      eyebrowText: '2단계 · 덜어내기',
+      titleHtml: '10개 중 5개만<br/>남겨주세요',
+      desc: '지금 노동이사로서 내게 더 필요한 자질 5개만 남겨보세요. (5개를 내려놓으면 됩니다)',
+      list: state.p1,
+      target: 5,
+      mode: 'remove',
+      counterLabel: '제거',
+      chipVariant: 'terracotta',
+      stageKey: 'positive_drop_1',
+      onDone: function(result, pickedArr){
+        state.p2 = result;
+        state.droppedPositive.step1 = pickedArr;
+        completeGate();
+        goTo('p3');
+      }
+    });
+  }
+
+  function renderP3(){
+    renderPickStep({
+      eyebrowText: '3단계 · 더 덜어내기',
+      titleHtml: '5개 중 3개만<br/>남겨주세요',
+      desc: '가장 깊은 곳에 있는 나의 우선순위를 만나게 됩니다. (2개를 내려놓으면 됩니다)',
+      list: state.p2,
+      target: 2,
+      mode: 'remove',
+      counterLabel: '제거',
+      chipVariant: 'terracotta',
+      stageKey: 'positive_drop_2',
+      onDone: function(result, pickedArr){
+        state.p3 = result;
+        state.droppedPositive.step2 = pickedArr;
+        completeGate();
+        goTo('n1');
+      }
+    });
+  }
+
+  function renderN1(){
+    renderPickStep({
+      eyebrowText: '4단계 · 마이너스 에너지',
+      eyebrowClass: 'is-negative',
+      titleHtml: '노동이사 역할을 앞두고<br/>걱정되거나 극복하고 싶은<br/>단어를 6개 골라주세요',
+      desc: '지금 나를 주저하게 만들거나, 이사회 자리 앞에서 벗어나고 싶은 마음들입니다. 외면하지 않고 직면하는 것이 변화의 시작입니다.',
+      list: NEGATIVE_POOL,
+      target: 6,
+      mode: 'keep',
+      counterLabel: '선택',
+      chipVariant: 'wine',
+      stageKey: 'negative_select',
+      onDone: function(result){
+        state.n1 = result;
+        completeGate();
+        goTo('n2');
+      }
+    });
+  }
+
+  function renderN2(){
+    renderPickStep({
+      eyebrowText: '5단계 · 마이너스 덜어내기',
+      eyebrowClass: 'is-negative',
+      titleHtml: '6개 중 3개만<br/>남겨주세요',
+      desc: '지금 가장 먼저 마주하고 싶은 고민 3개만 남겨주세요. (3개를 내려놓으면 됩니다)',
+      list: state.n1,
+      target: 3,
+      mode: 'remove',
+      counterLabel: '제거',
+      chipVariant: 'wine',
+      stageKey: 'negative_drop',
+      onDone: function(result, pickedArr){
+        state.n2 = result;
+        state.droppedNegative = pickedArr;
+        completeGate();
+        goTo('t');
+      }
+    });
+  }
+
+  function renderTransition(){
+    var choices = {};
+    var stepStart = Date.now();
+    var toggleCount = 0;
+    var html = '';
+    html += '<div class="eyebrow is-final">6단계 · 전환</div>';
+    html += '<h2 class="step-title">각 고민의 반대편에서<br/>내가 원하는 힘을 선택해주세요</h2>';
+    html += '<hr class="rule" />';
+    html += '<p class="desc">마이너스 에너지를 넘어서기 위해, 그 고민의 반대편에 있는 힘 중 가장 끌리는 하나를 골라보세요.</p>';
+
+    state.n2.forEach(function(negWord, i){
+      var options = TRANSITION_MAP[negWord] || ["용기","성장지향","균형감각"];
+      html += '<div class="trans-block" data-neg="' + i + '">';
+      html += '<div class="from-word">' + negWord + '</div>';
+      html += '<div class="arrow-note">이 고민을 넘어서기 위해 내가 원하는 힘은?</div>';
+      html += '<div class="trans-options">';
+      options.forEach(function(opt){
+        html += '<button type="button" class="chip" data-neg="' + i + '" data-word="' + opt + '">' + opt + '</button>';
+      });
+      html += '</div></div>';
+    });
+
+    html += '<div class="actions">';
+    html += renderDots();
+    html += '<button class="btn btn-primary" id="nextBtn" disabled>다음으로</button>';
+    html += '</div>';
+
+    app.innerHTML = html;
+
+    var nextBtn = document.getElementById('nextBtn');
+    function checkDone(){
+      nextBtn.disabled = Object.keys(choices).length !== state.n2.length;
+    }
+
+    app.querySelectorAll('.trans-options .chip').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var negIdx = btn.getAttribute('data-neg');
+        var word = btn.getAttribute('data-word');
+        choices[negIdx] = word;
+        toggleCount++;
+        var block = app.querySelector('.trans-block[data-neg="' + negIdx + '"]');
+        block.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('chip--active'); });
+        btn.classList.add('chip--active');
+        checkDone();
+      });
+    });
+
+    nextBtn.addEventListener('click', function(){
+      state.transitionWords = state.n2.map(function(negWord, i){ return choices[i]; });
+      state.oppositeChoices = state.n2.map(function(negWord, i){
+        return { negative: negWord, chosen_opposite: choices[i] };
+      });
+      state.journeyLog['opposite_select'] = { duration_ms: Date.now()-stepStart, total_toggles: toggleCount };
+      completeGate();
+      goNext();
+    });
+  }
+
+  function renderFinal(){
+    var picked = new Set();
+    var target = 3;
+    var stepStart = Date.now();
+    var toggleCount = 0;
+
+    var html = '';
+    html += '<div class="eyebrow is-final">7단계 · 최종 선택</div>';
+    html += '<h2 class="step-title">6개 중 지금의 나를<br/>가장 잘 담은 3개를 선택해주세요</h2>';
+    html += '<hr class="rule" />';
+    html += '<p class="desc">긍정의 여정에서 끝까지 살아남은 자질, 그리고 고민을 넘어서며 내가 원했던 힘들입니다. 진짜 나에게 울림이 있는 3개를 남겨주세요.</p>';
+    html += '<div class="counter-bar">';
+    html += '<div class="counter" id="counterEl">선택 <b id="counterNum">0</b> / ' + target + '</div>';
+    html += '<div class="helper-msg" id="helperMsg"></div>';
+    html += '</div>';
+
+    html += '<div class="group-label">지켜낸 자질</div>';
+    html += '<div class="chip-grid" id="gridPos"></div>';
+    html += '<div class="group-label">넘어선 힘</div>';
+    html += '<div class="chip-grid" id="gridTrans"></div>';
+
+    html += '<div class="actions">';
+    html += renderDots();
+    html += '<button class="btn btn-primary" id="nextBtn" disabled>결과 보기</button>';
+    html += '</div>';
+
+    app.innerHTML = html;
+
+    var counterNum = document.getElementById('counterNum');
+    var helperMsg = document.getElementById('helperMsg');
+    var nextBtn = document.getElementById('nextBtn');
+
+    function buildGrid(containerId, words, sourceTag){
+      var grid = document.getElementById(containerId);
+      words.forEach(function(word, idx){
+        var key = sourceTag + '-' + idx + '-' + word;
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip';
+        chip.textContent = word;
+        chip.addEventListener('click', function(){
+          if(picked.has(key)){
+            picked.delete(key);
+            chip.classList.remove('chip--active');
+            toggleCount++;
+          } else {
+            if(picked.size >= target){
+              helperMsg.textContent = '이미 ' + target + '개를 골랐어요. 다른 단어를 먼저 내려놓아 주세요.';
+              return;
+            }
+            picked.add(key);
+            chip.classList.add('chip--active');
+            toggleCount++;
+          }
+          helperMsg.textContent = '';
+          counterNum.textContent = picked.size;
+          nextBtn.disabled = picked.size !== target;
+        });
+        chip.dataset.word = word;
+        chip.dataset.source = sourceTag;
+        grid.appendChild(chip);
+      });
+    }
+
+    buildGrid('gridPos', state.p3, 'pos');
+    buildGrid('gridTrans', state.transitionWords, 'trans');
+
+    nextBtn.addEventListener('click', function(){
+      var activeChips = Array.from(app.querySelectorAll('.chip--active'));
+      state.finalValues = activeChips.map(function(c){ return c.dataset.word; });
+      state.finalBreakdown = {
+        already_have: activeChips.filter(function(c){ return c.dataset.source === 'pos'; }).map(function(c){ return c.dataset.word; }),
+        aspiring_to: activeChips.filter(function(c){ return c.dataset.source === 'trans'; }).map(function(c){ return c.dataset.word; })
+      };
+      state.journeyLog['final_select'] = { duration_ms: Date.now()-stepStart, total_toggles: toggleCount };
+      completeGate();
+      goNext();
+    });
+  }
+
+  var STAGE_LABELS = {
+    positive_select: '자질 단어 10개 선택',
+    positive_drop_1: '자질 단어 1차 덜어내기(10→5)',
+    positive_drop_2: '자질 단어 2차 덜어내기(5→3)',
+    negative_select: '고민 단어 6개 선택',
+    negative_drop: '고민 단어 덜어내기(6→3)',
+    opposite_select: '고민을 넘어서는 힘 선택',
+    final_select: '최종 가치 3개 선택'
+  };
+
+  function buildStageSummaries(){
+    var order = ['positive_select','positive_drop_1','positive_drop_2','negative_select','negative_drop','opposite_select','final_select'];
+    var list = order.map(function(key){
+      var entry = state.journeyLog[key] || { duration_ms: 0, total_toggles: 0 };
+      return { stage: key, duration_ms: entry.duration_ms, total_toggles: entry.total_toggles };
+    });
+    list.push({ stage: 'result', duration_ms: null, total_toggles: 0 });
+    return list;
+  }
+
+  function findMostHesitant(summaries){
+    var measured = summaries.filter(function(s){ return s.stage !== 'result'; });
+    var maxToggle = measured.reduce(function(a,b){ return b.total_toggles > a.total_toggles ? b : a; }, measured[0]);
+    var maxDuration = measured.reduce(function(a,b){ return b.duration_ms > a.duration_ms ? b : a; }, measured[0]);
+    return { maxToggle: maxToggle, maxDuration: maxDuration };
+  }
+
+  function buildPrompt(state){
+    var summaries = buildStageSummaries();
+
+    var data = {
+      final_values: {
+        already_have: state.finalBreakdown.already_have,
+        aspiring_to: state.finalBreakdown.aspiring_to
+      },
+      journey: {
+        positive_selected_10: state.p1,
+        dropped_positive: {
+          step1: state.droppedPositive.step1,
+          step2: state.droppedPositive.step2
+        },
+        positive_core_3: state.p3,
+        negative_selected_6: state.n1,
+        dropped_negative_3: state.droppedNegative,
+        negative_core_3: state.n2,
+        opposite_choices: state.oppositeChoices
+      },
+      stage_summaries: summaries
+    };
+
+    var json = JSON.stringify(data, null, 2);
+
+    return "당신은 노동이사 교육 프로그램 참여자의 가치 여정 데이터를 바탕으로 짧은 인물 요약을 작성하는 AI입니다. 이 요약은 네트워킹 시간에 참여자 본인이 읽고 옆 사람과 대화를 시작하는 용도입니다. 참여자가 10~15초 안에 읽을 수 있어야 합니다.\n\n" +
+      "아래는 한 참가자가 자질·고민 단어를 단계적으로 선택하고 덜어내며 완성한 데이터입니다.\n\n" +
+      "--- DATA ---\n" + json + "\n--- END DATA ---\n\n" +
+      "※ final_values.already_have는 이미 뿌리내린 확신이고, final_values.aspiring_to는 고민을 넘어서기 위해 지금 가장 필요로 하는 힘입니다. 둘을 똑같이 '강점'으로 뭉뚱그리지 마세요. aspiring_to가 비어 있는 경우, '지금 필요한 것' 섹션은 opposite_choices(고민의 반대편으로 선택한 단어들)를 근거로 써주세요.\n\n" +
+      "아래 형식 그대로, 전체 20문장 이내로 써주세요. 질문은 만들지 마세요 — 이 요약을 갖고 진행자가 직접 질문을 던질 예정입니다. 인사말이나 부연 설명 없이 본문만 바로 작성해주세요.\n\n" +
+      "**강점**\n(already_have를 중심으로 3~4문장)\n\n" +
+      "**고민하는 부분**\n(negative_core를 중심으로 3~4문장)\n\n" +
+      "**지금 필요한 것**\n(aspiring_to를 중심으로 3~4문장)\n\n" +
+      "문장은 짧고 담백하게 쓰되, 이 사람만의 고유한 결이 느껴지도록 써주세요. 강의나 보고서 말투가 아니라, 네트워킹 자리에서 사회자가 가볍게 소개해주는 말투로 써주세요.";
+  }
+
+  function renderResult(){
+    var html = '';
+    html += '<div class="eyebrow is-final">당신의 여정이 완성되었습니다</div>';
+    html += '<h1 class="headline">당신의 의자가<br/>채워졌습니다</h1>';
+    html += '<hr class="rule" />';
+    html += '<p class="lede">노동이사로서 지금의 당신을 가장 잘 설명하는 가치입니다. 이미 갖춘 것과, 지금 키워가는 중인 것을 구분해 두었습니다.</p>';
+
+    html += '<div class="value-cards">';
+    if(state.finalBreakdown.already_have.length){
+      html += '<div class="group-label">이미 갖춘 가치</div>';
+      state.finalBreakdown.already_have.forEach(function(word, i){
+        html += '<div class="value-card"><span class="num">0' + (i+1) + '</span><span class="word">' + word + '</span></div>';
+      });
+    }
+    if(state.finalBreakdown.aspiring_to.length){
+      html += '<div class="group-label">지금 키워가는 힘</div>';
+      state.finalBreakdown.aspiring_to.forEach(function(word, i){
+        html += '<div class="value-card"><span class="num">0' + (i+1) + '</span><span class="word">' + word + '</span></div>';
+      });
+    }
+    html += '</div>';
+
+    html += '<div class="prompt-box">';
+    html += '<label for="promptArea">AI 요약 프롬프트 — 복사해서 AI에게 붙여넣으면 네트워킹용 요약을 받을 수 있어요</label>';
+    html += '<textarea class="prompt-text" id="promptArea" readonly></textarea>';
+    html += '<div class="copy-row"><button class="btn btn-primary" id="copyBtn" type="button">복사하기</button><span class="copy-status" id="copyStatus">복사되었습니다</span></div>';
+    html += '</div>';
+
+    html += '<div class="result-actions">';
+    html += '<button class="btn btn-ghost" id="restartBtn" type="button">처음부터 다시 해보기</button>';
+    html += '</div>';
+
+    html += '<p class="disclaimer">이 결과는 자기 성찰을 돕기 위한 참고 자료입니다. 노동이사 적격성을 공식적으로 평가·인증하는 도구가 아니므로, 실제 후보 검토나 선임 과정에서는 기관의 공식 절차와 기준을 따라주세요.</p>';
+
+    app.innerHTML = html;
+
+    var promptArea = document.getElementById('promptArea');
+    promptArea.value = buildPrompt(state);
+
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      var status = document.getElementById('copyStatus');
+      function showStatus(){
+        status.classList.add('is-visible');
+        setTimeout(function(){ status.classList.remove('is-visible'); }, 1800);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(promptArea.value).then(showStatus).catch(function(){
+          promptArea.select();
+          document.execCommand('copy');
+          showStatus();
+        });
+      } else {
+        promptArea.select();
+        document.execCommand('copy');
+        showStatus();
+      }
+    });
+
+    document.getElementById('restartBtn').addEventListener('click', resetAll);
+  }
+
+  /* ---------------------------------------------------------------
+     라우터
+  --------------------------------------------------------------- */
+  function render(){
+    var key = currentKey();
+    if(key === 'intro') return renderIntro();
+    if(key === 'p1') return renderP1();
+    if(key === 'p2') return renderP2();
+    if(key === 'p3') return renderP3();
+    if(key === 'n1') return renderN1();
+    if(key === 'n2') return renderN2();
+    if(key === 't') return renderTransition();
+    if(key === 'f') return renderFinal();
+    if(key === 'result') return renderResult();
+  }
+
+  setProgress(0);
+  render();
+})();
+</script>
+</body>
+</html>
